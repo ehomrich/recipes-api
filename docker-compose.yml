@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  dev:
+    image: recipes-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    command: yarn run start
