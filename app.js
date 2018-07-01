@@ -13,4 +13,27 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
+app.get('/giphy/', (req, res) => {
+  getGif(req.query.q)
+    .then(results => {
+      res.send(results.data.data[0].images.original.url);
+    })
+    .catch(error => {
+      res.send({
+        status: error.response.status,
+        message: error.message
+      });
+    });
+});
+
+function getGif(query) {
+  return axios.get(GIPHY_API, {
+    params: {
+      api_key: GIPHY_API_KEY,
+      limit: 1,
+      q: query
+    }
+  });
+}
+
 module.exports = app;
