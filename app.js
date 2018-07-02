@@ -1,86 +1,77 @@
 'use strict';
 
 const express = require('express');
-const axios = require('axios');
+const recipeRouter = require('./src/recipe');
 
 const app = express();
 
-const RECIPEPUPPY_API = 'http://www.recipepuppy.com/api/';
-const GIPHY_API = 'http://api.giphy.com/v1/gifs/search';
-const GIPHY_API_KEY = process.env.GIPHY_API_KEY;
+app.use('/recipes/', recipeRouter);
+app.use(failedRequestHandler);
+app.use(invalidCredentialsHandler);
+app.use(tooManyRequestsHandler);
+app.use(serviceUnavailableHandler);
+app.use(invalidParameterHandler);
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
-
-app.get('/recipes/', (req, res) => {
-  if (req.query === {} || !req.query.i) {
-    res.status(400).send({
-      error: 'You must provide at least one ingredient'
-    });
-  } else if (req.query.i.split(/,\s*/).length > 3) {
-    res.status(400).send({
-      error: 'Too many ingredients. You must provide 1 to 3 ingredients'
+function failedRequestHandler(err, req, res, next) {
+  if (err.response.status === 500) {
+    res.status(503).json({
+      status: 503,
+      error: 'External service error',
+      message: 'Request to Recipe Puppy API failed with status 500'
     });
   } else {
-    getRecipes(req.query.i)
-      .then(recipes => {
-        res.json({
-          keywords: req.query.i.split(/,\s*/),
-          recipes: handleRecipes(recipes.data.results)
-        });
-      })
-      .catch(error => {
-        if (error.response.status === 500) {
-          res.json({
-            error: 'Request to Recipe Puppy API failed with status code 500'
-          });
-        }
-      });
+    next(err);
   }
-});
-
-app.get('/giphy/', (req, res) => {
-  getGif(req.query.q)
-    .then(results => {
-      res.send(results.data.data[0].images.original.url);
-    })
-    .catch(error => {
-      res.send(error.response);
-    });
-});
-
-function getRecipes(ingredients) {
-  return axios.get(RECIPEPUPPY_API, {
-    params: {
-      i: ingredients
-    }
-  });
 }
 
-function handleRecipes(recipes) {
-  const processedRecipes = [];
+function invalidCredentialsHandler(err, req, res, next) {
+  const status = err.response.status;
 
-  for (let recipe of recipes) {
-    processedRecipes.push({
-      title: recipe.title.trim(),
-      ingredients: recipe.ingredients.split(', ').sort(),
-      link: recipe.href,
-      gif: null
+  if (status === 401 || status === 403) {
+    res.status(403).json({
+      status: 403,
+      error: 'Authentication failed',
+      message: 'Invalid or missing authentication credentials for the Giphy API'
     });
+  } else {
+    next(err);
   }
-
-  return processedRecipes;
 }
 
-function getGif(query) {
-  return axios.get(GIPHY_API, {
-    params: {
-      api_key: GIPHY_API_KEY,
-      limit: 1,
-      q: query
-    }
-  });
+function tooManyRequestsHandler(err, req, res, next) {
+  if (err.response.status === 429) {
+    res.status(503).json({
+      status: 503,
+      error: 'Too many requests sent',
+      message: 'Too many requests were sent to the Giphy API in a short period of time'
+    });
+  } else {
+    next(err);
+  }
+}
+
+function serviceUnavailableHandler(err, req, res, next) {
+  if (err.response.status === 503) {
+    res.status(503).json({
+      status: 503,
+      error: 'Service(s) unavailable',
+      message: 'Some external services (Recipe Puppy and/or Giphy) are currently unavailable'
+    });
+  } else {
+    next(err);
+  }
+}
+
+function invalidParameterHandler(err, req, res, next) {
+  if (err instanceof TypeError) {
+    res.status(400).json({
+      status: 400,
+      error: 'Invalid parameter',
+      message: 'Incorrectly formatted request or missing required parameters'
+    });
+  } else {
+    next(err);
+  }
 }
 
 module.exports = app;
