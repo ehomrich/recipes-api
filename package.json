@@ -6,6 +6,9 @@
   "author": "Émerson Pinto Homrich <ehomrich@users.noreply.github.com>",
   "license": "MIT",
   "private": false,
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "dotenv": "^6.0.0",

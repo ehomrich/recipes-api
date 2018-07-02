@@ -1,16 +1,23 @@
 {
-    "extends": [
-      "eslint:recommended",
-      "plugin:node/recommended"
-    ],
-    "env": {
-      "node": true
-    },
-    "plugins": [
-      "node",
-      "import"
-    ],
-    "rules": {
-      "node/exports-style": ["error", "module.exports"]
-    }
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended"
+  ],
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "plugins": [
+    "node",
+    "import"
+  ],
+  "rules": {
+    "node/exports-style": ["error", "module.exports"],
+    "node/no-unsupported-features": ["error", {
+      "version": 8
+    }]
+  }
 }
