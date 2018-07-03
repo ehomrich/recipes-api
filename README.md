@@ -43,7 +43,7 @@ Faça uma requisição à `localhost:3000` e você deverá receber uma resposta 
 
 ```json
 {
-  message: "Hello world!"
+  "message": "Hello world!"
 }
 ```
 
