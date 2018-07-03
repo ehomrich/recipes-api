@@ -4,3 +4,5 @@ require('dotenv').config({ path: 'config/.env' });
 var app = require('../app');
 
 app.listen(3000);
+
+module.exports = app;

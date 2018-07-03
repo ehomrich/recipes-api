@@ -5,6 +5,12 @@ const recipeRouter = require('./src/recipe');
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Hello world!'
+  });
+});
+
 app.use('/recipes/', recipeRouter);
 app.use(failedRequestHandler);
 app.use(invalidCredentialsHandler);
