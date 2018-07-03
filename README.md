@@ -72,16 +72,18 @@ docker-compose -f docker-compose.yml up
 O projeto depende de três variáveis armazenadas em um arquivo de ambiente (`.env`), no formato `VAR=valor`.
 
 As variáveis são:
-- `GIPHY_API`: URL da API de buscas do Giphy.
+- `GIPHY_API`: URL da API de buscas do Giphy. **Obrigatória**.
 > Padrão: http://api.giphy.com/v1/gifs/search
 
 - `GIPHY_API_KEY`: chave de acesso à API do Giphy. **Obrigatória**.
 > Chaves podem ser solicitadas seguindo a documentação disponível em: https://developers.giphy.com/docs/
 
-- `RECIPE_PUPPY_API`: URL da API pública do Recipe Puppy.
+- `RECIPE_PUPPY_API`: URL da API pública do Recipe Puppy. **Obrigatória**.
 > Padrão: http://www.recipepuppy.com/api/
 
 Um arquivo de modelo é dispnibilizado em `config/.env.example`. Basta criar uma cópia **na mesma pasta**, editar e renomear.
+
+> Se alguma das variáveis não for preenchida, será lançado um erro `Improperly configured`.
 
 ## Referência da API
 
