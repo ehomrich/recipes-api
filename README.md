@@ -2,7 +2,7 @@
 
 API em Node.js para encontrar receitas a partir de ingredientes.
 
-## Prerequisitos e dependências
+## Pré-requisitos e dependências
 Este projeto foi construído com as seguintes dependências:
 
 - [Node](https://nodejs.org/en/download/) ^6.0.0
@@ -20,7 +20,7 @@ git clone https://github.com/ehomrich/recipes-api
 cd recipes-api/
 ```
 
-Insira sua chave de acesso à [API do Giphy](https://developers.giphy.com/docs/) em `config/.env.example` e renomeie o arquivo para `.env` (para maiores informações, consulte [Configuração](#configuração)).
+Insira sua chave de acesso à [API do Giphy](https://developers.giphy.com/docs/) na variável `GIPHY_API_KEY` em `config/.env.example` e renomeie o arquivo para `.env` (para maiores informações, consulte [Configuração](#configuração)).
 
 Em seguida, você pode [instalar os pacotes localmente e executar o projeto](#executando-localmente) ou [construir e executar um container do Docker](#executando-via-docker).
 
@@ -53,7 +53,7 @@ Para fazer uso da API, consulte a [referência](#referência-da-api).
 
 > Certifique-se de ter o [Docker](https://www.docker.com/get-docker) e o [Docker Compose](https://docs.docker.com/compose/install/#prerequisites) instalados em sua máquina.
 
-Para auxiliar na utilização do Docker, o projeto disponibiliza os arquivos `Dockerfile` e `docker-compose.yml` na raiz do projeto..
+Para auxiliar na utilização do Docker, o projeto disponibiliza os arquivos `Dockerfile` e `docker-compose.yml` na raiz do projeto.
 
 Para construir a imagem do serviço, execute o comando:
 
