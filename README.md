@@ -132,10 +132,10 @@ A resposta desta requisição será semelhante à seguinte:
          "link":"http://allrecipes.com/Recipe/Steamed-Mussels-I/Detail.aspx",
          "gif":"https://media1.giphy.com/media/iix3nosdByWLm/giphy.gif"
       },
-      ...
    ]
 }
 ```
+> A API do Recipe Puppy retorna, por padrão, 10 receitas por página.
 
 -----
 #### Erros
@@ -144,9 +144,9 @@ Parâmetros `i` de entrada que não possuam de 1 a 3 ingredientes receberão com
 
 ```json
 {
-  status: 400,
-  error: "Invalid parameter",
-  message: "Incorrectly formatted request or missing required parameters"
+  "status": 400,
+  "error": "Invalid parameter",
+  "message": "Incorrectly formatted request or missing required parameters"
 }
 ```
 
