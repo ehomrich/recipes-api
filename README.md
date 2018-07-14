@@ -39,7 +39,7 @@ npm install
 npm start
 ```
 
-Faça uma requisição à `localhost:3000` e você deverá receber uma resposta como essa:
+Faça uma requisição à `localhost:3000` e você deverá receber como resposta:
 
 ```json
 {
@@ -61,7 +61,7 @@ Para construir a imagem do serviço, execute o comando:
 docker-compose -f docker-compose.yml build
 ```
 
-Após o término do processo, execute o projeto com o comando:
+Para executar o projeto, utilize o comando:
 
 ```shell
 docker-compose -f docker-compose.yml up
@@ -81,7 +81,7 @@ As variáveis são:
 - `RECIPE_PUPPY_API`: URL da API pública do Recipe Puppy. **Obrigatória**.
 > Padrão: http://www.recipepuppy.com/api/
 
-Um arquivo de modelo é dispnibilizado em `config/.env.example`. Basta criar uma cópia **na mesma pasta**, editar e renomear.
+Um arquivo de modelo é disponibilizado em `config/.env.example`. Basta criar uma cópia **na mesma pasta**, editar e renomear.
 
 > Se alguma das variáveis não for preenchida, será lançado um erro `Improperly configured`.
 
@@ -91,14 +91,14 @@ A API do projeto possui apenas um endpoint:
 
 ### GET /recipes/
 
-Este endpoint espera um parâmetro `i`, contendo uma lista de até 3 ingredientes, respeitando a seguinte chamada:
+Este endpoint espera um parâmetro `i`, contendo uma lista de ingredientes, respeitando a seguinte chamada:
 
 ```
 http://{HOST}/recipes/?i={ingredient_1},{ingredient_2},{ingredient_3}
 ```
-> O parâmetro `i` deve possuir de 1 a 3 ingredientes.
+> O parâmetro `i` deve obrigatoriamente possuir de 1 a 3 ingredientes.
 
-A partir dos ingredientes informados, é realiza uma consulta à API do Recipe Puppy, e consultas à API do Giphy baseadas no título de cada receita retornada pelo Recipe Puppy.
+A partir dos ingredientes informados, é realiza uma consulta à API do Recipe Puppy, e consultas à API do Giphy baseadas no título de cada receita obtida.
 
 **Exemplo:**
 
@@ -134,6 +134,7 @@ A resposta desta requisição será semelhante à seguinte:
          "link":"http://allrecipes.com/Recipe/Steamed-Mussels-I/Detail.aspx",
          "gif":"https://media1.giphy.com/media/iix3nosdByWLm/giphy.gif"
       },
+      ...
    ]
 }
 ```
